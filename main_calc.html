@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAIN CALCULATOR</title>
+    <style>
+        /* BODY STYLING */
+body{
+    /* background: linear-gradient(135deg, #1d2b64, #f8cdda); */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+}
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
+/* CONTAINER IN WHICH CALCULATOR AVAILABLE */
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  animation: slideIn 0.5s ease-out;
+}
+@keyframes slideIn {
+from {
+transform: translateY(-100px);
+opacity: 0;
+}
+to {
+transform: translateY(0);
+opacity: 1;
+}
+}
+
+
+/* TITLE */
+.title {
+  text-align: center;
+  color: #ffffff;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+
+/* CALCULATOR */
+.calculator {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 10px;
+width: 60%; 
+max-width: 400px; 
+margin: auto;
+padding: 20px;
+background: #222222;
+border-radius: 50px;
+
+box-shadow:
+0 4px 8px rgba(0, 0, 0, 0.2),
+0 8px 24px rgba(0, 0, 0, 0.3),
+0 12px 32px rgba(0, 0, 0, 0.15);
+
+}
+
+
+/* DISPLAY */
+.display {
+    grid-column: span 4;
+    background: #000;
+    color:lime;
+    font-size: 2rem;
+    font-weight:500;
+    padding: 10px;
+    text-align: right;
+    border-radius: 50px;
+    box-shadow: 0px 0px 2px;
+    transition: all 0.3s ease-in-out;
+}
+.updated {
+    animation: pop 0.2s ease-in-out;
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+
+/* BUTTON'S */
+button {
+    font-size: 1.5rem;
+    padding: 20px;
+    background: #444;
+    color: #ffffff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+
+    box-shadow: 0px 2px 3px;
+
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+button:hover {
+    background: #555;
+    transform: scale(1.05);
+}
+button:active {
+    transform: scale(0.95); /* a small press effect */
+}
+
+.decimal{
+  color:#4D6AFF ;
+  font-weight:700;
+}
+
+.equal{
+  color: #BF00E6 ;
+  font-weight:500;
+}
+
+.operands{
+  color: #FF8000 ;
+  font-weight:500;
+}
+
+.number{
+  color: #FFD919 ;
+  font-weight:500;
+}
+
+.clear{
+    grid-column: span 2;
+    color: #FF4444;
+    font-weight:500;
+}
+
+@keyframes shake {
+0%, 100% { transform: translateX(0); }
+25% { transform: translateX(-5px); }
+75% { transform: translateX(5px); }
+}
+
+.display.error {
+animation: shake 0.3s ease-in-out;
+color: red;
+}
+.pressed {
+    background-color: black;
+    transform: scale(0.95);
+}
+
+
+
+
+
+/* TO MAKE PAGE RESPONSIVE */
+/* Media Query for smaller screens */
+@media (max-width: 600px) {
+.calculator {
+    width: 80%; /* Make it wider on small screens */
+    padding: 15px;
+}
+
+.display {
+    font-size: 1.5rem; /* Reduce display font size */
+    padding: 10px;
+}
+
+button {
+    font-size: 1.2rem; /* Reduce button font size */
+    padding: 15px;
+}
+
+#clear {
+    font-size: 1.2rem; /* Adjust the size of the clear button */
+    padding: 18px;
+}
+}
+
+    /* Media Query for very small screens (like phones) */
+    @media (max-width: 400px) {
+        .calculator {
+            width: 90%; /* Make it take up more space */
+            padding: 10px;
+        }
+
+        .display {
+            font-size: 1.2rem; /* Further reduce display font size */
+            padding: 8px;
+        }
+
+        button {
+            font-size: 1rem; /* Further reduce button font size */
+            padding: 12px;
+        }
+
+        #clear {
+            font-size: 1rem; /* Reduce font size for clear button */
+            padding: 15px;
+        }
+    }
+    </style> 
+</head>
+<body>
+
+    <div class="container">
+      <h1 class="title">AJ Calc 🧮</h1>
+        <div class="calculator">
+            <div id="display" class="display">
+                "Cool clicks. Quick tricks."
+            </div>
+                <button onclick="clearDisplay()" class="clear" data-key="c">C</button>
+                <button onclick="backspace()" class="clear" data-key="c">←</button>
+
+                <button onclick="press('7')" class="number" data-key="7">7</button>
+                <button onclick="press('8')" class="number" data-key="8">8</button>
+                <button onclick="press('9')" class="number" data-key="9">9</button>
+                <button onclick="press('/')" class="operands" data-key="/">/</button>
+
+                <button onclick="press('4')" class="number" data-key="4">4</button>
+                <button onclick="press('5')" class="number" data-key="5">5</button>
+                <button onclick="press('6')" class="number" data-key="6">6</button>
+                <button onclick="press('*')" class="operands" data-key="*">*</button>
+
+                <button onclick="press('1')" class="number" data-key="1">1</button>
+                <button onclick="press('2')" class="number" data-key="2">2</button>
+                <button onclick="press('3')" class="number" data-key="3">3</button>
+                <button onclick="press('-')" class="operands" data-key="-">-</button>
+
+                <button onclick="press('.')" class="decimal" data-key=".">.</button>
+                <button onclick="press('0')" class="number" data-key="0">0</button>
+                <button onclick="calculate()" class="equal" data-key="=">=</button>
+                <button onclick="press('+')" class="operands" data-key="+">+</button>
+
+                
+
+
+                
+
+        </div>
+    </div>
+      
+<script>
+        
+let input = '';
+
+function press(value) {
+    input += value;
+    const display = document.getElementById('display');
+    display.textContent = input;
+    display.classList.add('updated');
+
+    setTimeout(() => {
+    display.classList.remove('updated');
+    }, 200);
+}
+
+function calculate() {
+    try {
+        let result;
+        const operands = input.split(/\+|\-|\*|\//); // Split input into operands
+        const operators = input.replace(/[0-9]/g, '').split(''); // Get the operators
+
+        // First operand
+        result = parseFloat(operands[0]);
+
+        for (let i = 0; i < operators.length; i++) {
+            const operator = operators[i];
+            const nextOperand = parseFloat(operands[i + 1]);
+
+            switch (operator) {
+            case '+':
+                result += nextOperand;
+                break;
+            case '-':
+                result -= nextOperand;
+                break;
+            case '*':
+                result *= nextOperand;
+                break;
+            case '/':
+                if (nextOperand === 0) {
+                throw new Error('Cannot divide by 0');
+                }
+                result /= nextOperand;
+                break;
+            default:
+                throw new Error('Invalid operator');
+            }
+        }
+
+        input = result.toString();
+        document.getElementById('display').textContent = input;
+
+    }   catch (error) {
+            // Display the error message (error.message) in the display
+            const display = document.getElementById('display');
+            display.textContent = error.message;
+            display.classList.add('error');
+
+            setTimeout(() => {
+                display.classList.remove('error');
+            }, 300);
+
+            input = '';
+        }
+            
+}
+
+function backspace() {
+    input = input.slice(0, -1);
+    updateDisplay();
+}
+  
+
+function clearDisplay() {
+    input = '';
+    document.getElementById('display').textContent = '0';
+}
+
+function updateDisplay() {
+      document.getElementById('display').textContent = input || '0';
+}
+
+// 💻 Keyboard support
+document.addEventListener('keydown', function (event) {
+    const key = event.key;
+    const validKeys = '0123456789.+-*/';
+
+    // Find button with matching data-key
+    const button = document.querySelector(`button[data-key="${key.toLowerCase()}"]`);
+    if (button) {
+        button.classList.add('pressed');
+        setTimeout(() => button.classList.remove('pressed'), 100);
+    }
+
+        if (validKeys.includes(key)){
+                press(key);
+            } else if (key === 'Enter' || key === '=') {
+                    calculate();
+                } else if (key === 'Escape' || key.toLowerCase() === 'c') {
+                        clearDisplay();
+                    } else if (key === 'Backspace') {
+                            input = input.slice(0, -1);
+                            updateDisplay();
+                        }   
+});
+       
+       
+</script>
+
+
+
+</body>
+</html>
