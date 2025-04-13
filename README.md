@@ -13,7 +13,7 @@ AJ Calc is a sleek and responsive web-based calculator built using HTML, CSS, an
 
 ## 📸 Preview
 
-[AJ Calc Screenshot](Calc%20screenshot.png) 
+[AJ Calc Screenshot](screenshot.png) 
 
 ## 🛠️ Tech Stack
 
